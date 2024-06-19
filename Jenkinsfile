@@ -17,7 +17,7 @@ pipeline {
         stage('Test') {
             steps {
                 script {
-                    sh "docker exec -i ${docker ps -q --no-trunc | head -n 1} sh -c 'python3 WorldOfGames/e2e.py'"
+                    sh "docker exec -i worldofgames_app sh -c 'python3 WorldOfGames/e2e.py'"
                 }
             }
         }
