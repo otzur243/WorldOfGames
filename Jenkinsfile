@@ -13,15 +13,20 @@ pipeline {
                 sh 'echo Running...'
                 sh 'docker run --name worldofgames_app --detach --rm --publish 8777:8777 --env FLASK_APP=WorldOfGames --env FLASK_RUN_HOST=0.0.0.0 --env FLASK_RUN_PORT=8777 omritz243/worldofgames:1.0'
                 sh 'docker ps -f "name=worldofgames_app"'
-                sh 'container_id=$(docker ps -q --no-trunc | head -n 1)'
-                sh 'echo $container_id'
-
+                script {
+                    // Retrieve the container ID and store it in a variable accessible in the pipeline
+                    container_id = sh(script: "docker ps -q --no-trunc | head -n 1", returnStdout: true).trim()
+                    echo "Container ID: ${container_id}"
+                }
             }
         }
         stage('Test') {
             steps {
                 sh 'echo Testing...'
-                sh "docker exec -i ${container_id} sh -c \"python WorldOfGames/e2e.py\""
+                script {
+                    // Execute the command inside the container using the retrieved container ID
+                    sh "docker exec -i ${container_id} sh -c \"python WorldOfGames/e2e.py\""
+                }
             }
         }
         stage('Finalize') {
