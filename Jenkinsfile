@@ -13,7 +13,7 @@ pipeline {
                 sh 'echo Running...'
                 sh 'docker run --name worldofgames_app --detach --rm --publish 8777:8777 --env FLASK_APP=WorldOfGames --env FLASK_RUN_HOST=0.0.0.0 --env FLASK_RUN_PORT=8777 omritz243/worldofgames:1.0'
                 sh 'docker ps -f "name=worldofgames_app"'
-                sh 'container_id=$(docker ps --format "{{.ID}}")'
+                sh 'container_id=$(docker ps -q --no-trunc | head -n 1)'
                 sh 'echo $container_id'
 
             }
