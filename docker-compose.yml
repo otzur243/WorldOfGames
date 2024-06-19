@@ -1,0 +1,11 @@
+services:
+  web:
+    build: .
+    image: "omritz243/worldofgames:1.0"
+    ports:
+      - "8777:8777"
+    environment:
+      FLASK_APP: WorldOfGames
+      FLASK_RUN_HOST: 0.0.0.0
+      FLASK_RUN_PORT: 8777
+      FLASK_ENV: development
