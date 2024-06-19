@@ -13,12 +13,15 @@ pipeline {
                 sh 'echo Running...'
                 sh 'docker run --name worldofgames_app --detach --rm --publish 8777:8777 --env FLASK_APP=WorldOfGames --env FLASK_RUN_HOST=0.0.0.0 --env FLASK_RUN_PORT=8777 omritz243/worldofgames:1.0'
                 sh 'docker ps -f "name=worldofgames_app"'
+                container_id=$(docker ps --format "{{.ID}}")
+                echo $container_id
+
             }
         }
         stage('Test') {
             steps {
                 sh 'echo Testing...'
-                sh 'docker exec -i worldofgames_app sh -c "python WorldOfGames/e2e.py"'
+                sh 'docker exec -i container_id sh -c "python WorldOfGames/e2e.py"'
             }
         }
         stage('Finalize') {
