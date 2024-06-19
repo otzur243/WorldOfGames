@@ -12,12 +12,8 @@ pipeline {
             steps {
                 sh 'echo Running...'
                 sh 'docker run --name worldofgames_app --detach --rm --publish 8777:8777 --env FLASK_APP=WorldOfGames --env FLASK_RUN_HOST=0.0.0.0 --env FLASK_RUN_PORT=8777 omritz243/worldofgames:1.0'
-
-                script {
-                    // Retrieve the container ID and store it in a variable accessible in the pipeline
-                    container_id = sh("$(docker ps -q --no-trunc | head -n 1)")
-                    echo "Container ID: ${container_id}"
-                }
+                sh "container_id = $(docker ps -q --no-trunc | head -n 1)"
+                sh "echo Container ID: ${container_id}"
             }
         }
         stage('Test') {
