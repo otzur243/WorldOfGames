@@ -15,7 +15,7 @@ pipeline {
 
                 script {
                     // Retrieve the container ID and store it in a variable accessible in the pipeline
-                    container_id = sh(script: "container_id = $(docker ps -q --no-trunc | head -n 1)")
+                    container_id = sh("$(docker ps -q --no-trunc | head -n 1)")
                     echo "Container ID: ${container_id}"
                 }
             }
