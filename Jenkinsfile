@@ -21,7 +21,7 @@ pipeline {
         stage('Test') {
             steps {
                 sh 'echo Testing...'
-                sh 'docker exec -i ${container_id} sh -c "python WorldOfGames/e2e.py"'
+                sh "docker exec -i ${container_id} sh -c 'python WorldOfGames/e2e.py'"
             }
         }
         stage('Finalize') {
