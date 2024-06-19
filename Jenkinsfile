@@ -11,7 +11,7 @@ pipeline {
         stage('Run') {
             steps {
                 sh 'echo Running...'
-                sh 'docker run --name worldofgames_app --detach --rm --publish 8777:8777 --env FLASK_APP=WorldOfGames --env FLASK_RUN_HOST=0.0.0.0 --env FLASK_RUN_PORT=8777 omritz243/worldofgames:1.0'
+                sh 'docker run --name worldofgames_app -d --rm --publish 8777:8777 --env FLASK_APP=WorldOfGames --env FLASK_RUN_HOST=0.0.0.0 --env FLASK_RUN_PORT=8777 omritz243/worldofgames:1.0'
                 sh 'docker ps -a'
             }
         }
